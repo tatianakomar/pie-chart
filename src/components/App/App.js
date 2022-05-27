@@ -1,7 +1,7 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
-import data from '../../utils/data.json';
+import chartApi from '../../utils/chartApi';
 
 const chartColors = ['#186eab', '#b4d7f0', '#2491bd']
 
@@ -39,8 +39,20 @@ const preapareTableData = (data, year,course )=>{
 }
 
 function App() {
+  const [data, setData] = React.useState([]);
   const [year, setYear] = useState('All');
   const [course, setCourse] = useState();
+
+  useEffect(() => {
+    chartApi
+      .getData()
+      .then((data) => {
+        setData(data)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   function onChangeValue(event) {
     if(event.target.value !=='All'){
