@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
 import data from '../../utils/data.json';
 
-const chartColors = ["#186eab", "#b4d7f0", "#2491bd"]
+const chartColors = ['#186eab', '#b4d7f0', '#2491bd']
 
 const prepareChartData = (data, year) => {
   var result = {}
@@ -18,8 +18,8 @@ const prepareChartData = (data, year) => {
   }
 
   const studentsArray = Object.keys(result).map(val => {return {
-    "name": val,
-    "students":result[val]}});
+    'name': val,
+    'students':result[val]}});
   return studentsArray;
 }
 
@@ -63,40 +63,37 @@ function App() {
   }
   const sortedChartData = chartData.sort(sortChartData);
   const groupTableData = preapareTableData(data, year, course);
-  console.log(groupTableData)
 
   const average = groupTableData.reduce((sum, current) => sum + current.students, 0) / groupTableData.length;
-  console.log(average)
-
+  
   return (
-    <div className="main">
-      <h1 className="main_title">Students by Course {year}</h1>
-    
+    <>
+      <h1 className="main_title">Students by Course {year === 'All' ? '2015 and 2016' :year}</h1>
       <div className="radio-btn_container">
         <p className="radio-btn_title">Years:</p>
-        <label className="radio-btn_label" htmlFor="all">
-          <input className="radio-btn_input" type="radio" id="all" name="year" value="All" checked={year === "All"} onChange={onChangeValue} />
+        <label className="radio-btn_label" htmlFor='all'>
+          <input className="radio-btn_input" type='radio' id='all' name='year' value='All' checked={year === 'All'} onChange={onChangeValue} />
           All
         </label>
-        <label className="radio-btn_label" htmlFor="2015">
-          <input className="radio-btn_input" type="radio" id="2015" name="year" value="2015" checked={year === 2015} onChange={onChangeValue} />
+        <label className="radio-btn_label" htmlFor='2015'>
+          <input className="radio-btn_input" type='radio' id='2015' name='year' value='2015' checked={year === 2015} onChange={onChangeValue} />
           2015
         </label>
-        <label className="radio-btn_label" htmlFor="2016">
-          <input className="radio-btn_input" type="radio" id="2016" name="year" value="2016" checked={year === 2016} onChange={onChangeValue} />
+        <label className="radio-btn_label" htmlFor='2016'>
+          <input className="radio-btn_input" type='radio' id='2016' name='year' value='2016' checked={year === 2016} onChange={onChangeValue} />
           2016
         </label>
       </div>
       <div className="chart_container">
-        <PieChart className="chart_pie" width={450} height={450}>
-            <Pie data={sortedChartData} dataKey="students" cx="50%" cy="50%" outerRadius={130} onClick={selectCourse}>
+        <PieChart className="chart_pie" width={300} height={300}>
+            <Pie data={sortedChartData} dataKey='students' cx='50%' cy='60%' outerRadius={130} onClick={selectCourse}>
               {
                 sortedChartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={chartColors[index]}/>
                 ))
               }
             </Pie>
-            <Legend width={450} verticalAlign="bottom" iconType="square" iconSize="10" formatter={(value, entry, index) => <span className="chart_legend_text">{value}</span>}></Legend>
+            <Legend iconType='square' iconSize='10' wrapperStyle={{ position: 'relative' }} formatter={(value, entry, index) => <span className="chart_legend_text">{value}</span>}></Legend>
         </PieChart>
         {course && (
           <div className="table_container">
@@ -124,7 +121,7 @@ function App() {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
 export default App;
