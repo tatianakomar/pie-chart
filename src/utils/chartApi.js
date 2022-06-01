@@ -1,8 +1,8 @@
-const baseUrl = "http://localhost:3005/data";
+const baseUrl = "/";
 
 class ChartApi {
   getData () {
-    return fetch(baseUrl, {
+    return fetch(baseUrl+'data', {
       method: "GET",
       headers: {
         Accept: "application/json",
