@@ -6,16 +6,14 @@ const app = express();
 app.use(cors());
 
 const path = require('path');
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3000;
 
 app.get('/data', (req, res) => {
-    console.log("I am in /data");
     res.json(data);
 })
 
 app.use(express.static('build'));
 app.get('*', (req, res) => {
-    console.log('I am static')
     req.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 })
 
